@@ -1,0 +1,14 @@
+## Title: BidDKP
+## Version: 0.0.1
+## Author: Lifebinder
+## Interface: 11200
+## SavedVariables: BidDKP_AutoCloseWindow, BidDKP_PreventSelfOverbid 
+
+
+
+BidDKP.lua
+BidDKP_Roll.lua
+BidDKP_PlayerDKP.lua
+BidDKP-options.lua
+BidDKP.xml
+BidDKP-options.xml

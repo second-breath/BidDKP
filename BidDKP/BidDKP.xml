@@ -1,0 +1,453 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <Frame name="BidDKPFrame" parent="UIParent" hidden="true" movable="true" enableMouse="true">
+        <Size>
+            <AbsDimension x="300" y="302" />
+        </Size>
+        <Anchors>
+            <Anchor point="CENTER" />
+        </Anchors>
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background"
+                edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+            <EdgeSize>
+                <AbsValue val="16"/>
+            </EdgeSize>
+            <TileSize>
+                <AbsValue val="32"/>
+            </TileSize>
+            <BackgroundInsets>
+                <AbsInset left="5" right="5" top="5" bottom="5"/>
+            </BackgroundInsets>
+        </Backdrop>
+        <Scripts>
+            <OnLoad>
+                this:RegisterForDrag("LeftButton");
+            </OnLoad>
+            <OnDragStart>
+                this:StartMoving();
+            </OnDragStart>
+            <OnDragStop>
+                this:StopMovingOrSizing();
+            </OnDragStop>
+        </Scripts>
+
+            <Frames>
+            <Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-5" y="-5" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+            </Button>
+
+                <Button name="$parentOptionsButton" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="20" y="20" />
+                </Size>
+                <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset x="12" y="-13" />
+                        </Anchor>
+                </Anchors>
+
+                <NormalTexture file="Interface\Icons\INV_Misc_Gear_02">
+                    <Size>
+                        <AbsDimension x="20" y="20" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </NormalTexture>
+                <PushedTexture file="Interface\Icons\INV_Misc_Gear_08" >
+                    <Size>
+                        <AbsDimension x="20" y="20" />
+                    </Size>
+                    <Anchors>
+                        <Anchor point="CENTER"/>
+                    </Anchors>
+                </PushedTexture>
+                <Scripts>
+                    <OnClick>
+                        getglobal("BidDKPOptionsFrame"):Show()
+                    </OnClick>
+                    <OnEnter>
+                        GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+                        GameTooltip:SetText("Options", 1, 1, 1);
+                    </OnEnter>
+                <OnLeave>
+                    GameTooltip:Hide();
+                </OnLeave>
+                </Scripts>
+            </Button> 
+            
+
+                <Button name="$parentExtraButton1" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="60" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset>
+                            <AbsDimension x="80" y="-82" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                    <Scripts>
+				<OnLoad>
+					getglobal(this:GetName()):SetText("MS")
+				</OnLoad>
+                <OnClick>
+                    BidDKP_OnSetMainSpec()
+                    getglobal(this:GetName()):Disable()
+                    getglobal("BidDKPFrameExtraButton2"):Enable()
+                </OnClick>
+			</Scripts>
+            </Button>
+
+            <Button name="$parentExtraButton2" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="60" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parentExtraButton1" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="5" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+
+                <Scripts>
+				<OnLoad>
+					getglobal(this:GetName()):SetText("OS")
+				</OnLoad>
+                <OnClick>
+                    BidDKP_OnSetOffSpec()
+                    getglobal(this:GetName()):Disable()
+                    getglobal("BidDKPFrameExtraButton1"):Enable()
+                </OnClick>
+			</Scripts>
+            </Button>
+            
+            <EditBox name="$parentInputBox" autoFocus="false" letters="40" inherits="InputBoxTemplate">
+            <Size>
+                <AbsDimension x="100" y="40" />
+            </Size>
+            <Anchors>
+                <Anchor point="TOP" relativePoint="TOP">
+                    <Offset x="-45" y="-120" />
+                </Anchor>
+            </Anchors>
+            <Scripts>
+                <OnEnterPressed>
+                    getglobal("BidDKPFrameInputBox"):ClearFocus();
+                </OnEnterPressed>
+            </Scripts>
+        </EditBox>
+         <Button name="$parentButton7" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="60" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parentInputBox" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="5" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                 <Scripts>
+                    <OnLoad>
+					    getglobal(this:GetName()):SetText("Your bid")
+				    </OnLoad>
+                    <OnClick>
+                        BidDKP_OnSendPlayerBidFromRaidChat("inputDKP")
+                    </OnClick>
+                </Scripts>
+            </Button>
+
+
+            <Button name="$parentButton1" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="60" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parentInputBox" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="0" y="-10" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                 <Scripts>
+                    <OnLoad>
+					    getglobal(this:GetName()):SetText("+10 DKP")
+				    </OnLoad>
+                    <OnClick>
+                        BidDKP_OnSendPlayerBidFromRaidChat("10")
+                    </OnClick>
+                </Scripts>
+            </Button>
+
+            <Button name="$parentButton2" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="60" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parentButton1" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="5" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+					    getglobal(this:GetName()):SetText("+50 DKP")
+				    </OnLoad>
+                      <OnClick>
+                        BidDKP_OnSendPlayerBidFromRaidChat("50")
+                    </OnClick>
+                </Scripts>
+            </Button>
+
+            <Button name="$parentButton3" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="60" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parentButton2" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="5" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+					    getglobal(this:GetName()):SetText("+100 DKP")
+				    </OnLoad>
+                      <OnClick>
+                        BidDKP_OnSendPlayerBidFromRaidChat("100")
+                    </OnClick>
+                </Scripts>
+            </Button>
+
+            <Button name="$parentButton4" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="60" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parentButton1" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="0" y="-10" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+					    getglobal(this:GetName()):SetText("All In")
+				    </OnLoad>
+                      <OnClick>
+                        BidDKP_OnSendPlayerBidFromRaidChat("all")
+                    </OnClick>
+                </Scripts>
+            </Button>
+
+            <Button name="$parentButton5" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="60" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parentButton4" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="5" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+
+                <Scripts>
+                    <OnLoad>
+					    getglobal(this:GetName()):SetText("Pass")
+				    </OnLoad>
+                     <OnClick>
+                        BidDKP_OnSendPlayerBidFromRaidChat("pass")
+                    </OnClick>
+                </Scripts>
+            </Button>
+             <Button name="$parentButton6" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="60" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parentButton5" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="5" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+
+                <Scripts>
+                    <OnLoad>
+					    getglobal(this:GetName()):SetText("Refresh")
+				    </OnLoad>
+                     <OnClick>
+                        BidDkp_ClearAuctionDisplay()
+                    </OnClick>
+                </Scripts>
+            </Button>
+
+            <Button name="$parentButton8" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="60" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parentButton4" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="0" y="-40" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+
+                <Scripts>
+                    <OnLoad>
+					    getglobal(this:GetName()):SetText("MS Roll")
+				    </OnLoad>
+                     <OnClick>
+                         BidDKP_HandleRoll("msRoll")
+                    </OnClick>
+                </Scripts>
+            </Button>
+            <Button name="$parentButton9" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="60" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parentButton8" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="5" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+
+                <Scripts>
+                    <OnLoad>
+					    getglobal(this:GetName()):SetText("OS Roll")
+				    </OnLoad>
+                     <OnClick>
+                       BidDKP_HandleRoll("osRoll")
+                    </OnClick>
+                </Scripts>
+            </Button>
+            <Button name="$parentButton10" inherits="UIPanelButtonTemplate">
+                <Size>
+                    <AbsDimension x="60" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parentButton9" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="5" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+
+                <Scripts>
+                    <OnLoad>
+					    getglobal(this:GetName()):SetText("Transmog")
+				    </OnLoad>
+                    <OnClick>
+                         BidDKP_HandleRoll("transmog")
+                    </OnClick>
+                </Scripts>
+            </Button>
+
+        </Frames>
+
+           <Layers>
+			<Layer level="ARTWORK">
+				<Texture name="$parentHeaderTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
+					<Size>
+						<AbsDimension x="360" y="64" />
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="12" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+				<FontString inherits="GameFontNormal" text="Bid DKP">
+					<Anchors>
+						<Anchor point="TOP" relativeTo="$parentHeaderTexture">
+							<Offset>
+								<AbsDimension x="0" y="-14" />
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+    </Frame>
+
+
+   <Button name="BidDKP_MinimapButtonFrame" toplevel="true" frameStrata="LOW" parent="Minimap" enableMouse="true" movable="true" hidden="false">
+		<Size>
+			<AbsDimension x="33" y="33"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOPLEFT">
+				<Offset>
+					<AbsDimension x="-18" y="-100"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parent_Texture" file="Interface\ICONS\INV_Misc_Coin_04.blp">
+					<Size>
+						<AbsDimension x="17" y="17"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="8" y="-8"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.075" right="0.925" top="0.075" bottom="0.925"/>
+				</Texture>
+			</Layer>
+		<Layer level="OVERLAY">
+			<Texture file="Interface\Minimap\MiniMap-TrackingBorder">
+				<Size>
+					<AbsDimension x="56" y="56"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPLEFT"/>
+				</Anchors>
+			</Texture>
+		</Layer>
+		</Layers>
+		<HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight"/>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonUp")
+				this:RegisterForDrag("RightButton")
+				this:SetClampedToScreen(true)
+			</OnLoad>
+			<OnClick>
+                BidDKP_OnClickBidDKP();
+			</OnClick>
+			<OnDragStart>
+				this:LockHighlight()
+				this:StartMoving()
+			</OnDragStart>
+			<OnDragStop>
+				this:UnlockHighlight()
+				this:StopMovingOrSizing()
+			</OnDragStop>
+		</Scripts>
+	</Button>
+
+    
+
+</Ui>
