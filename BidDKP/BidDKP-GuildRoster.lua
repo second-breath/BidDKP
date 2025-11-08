@@ -1,6 +1,5 @@
 local CURRENT_PLAYER_DKP = 0
 
--- local GuildRosterTable = { }
 
 function BidDKP_SetPlayerDKP(dkp)
     CURRENT_PLAYER_DKP = tonumber(dkp);
@@ -69,7 +68,6 @@ end
 function BidDKP_GetPlayerDkp(playerName)
 	local memberCount = GetNumGuildMembers(true);
     local playerDkp = 0
-	DEFAULT_CHAT_FRAME:AddMessage("BidDKP_GetPlayerDkp")
 	for n = 1, memberCount do
 		local name, _, _, _, _, _, _, officerNote = GetGuildRosterInfo(n)
 

@@ -5,7 +5,8 @@ local BID_DKP_ROLL_PRIORITY = {
     tmog  = 1,
   }
 
-local CURRENT_ROLL = {}
+
+
 
 -- Normalize just in case (handles typos like "MainSpeck/Offspeck")
 function BidDKP_NormalizeType(t)
@@ -21,6 +22,10 @@ end
 function BidDKP_ShouldReplaceRoll(current, candidate)
     if not candidate then return false end
     if not current then return true end
+
+    if current.name and candidate.name and current.name == candidate.name then
+      return false
+  end
   
     local pc = BID_DKP_ROLL_PRIORITY[current.type]  or 0
     local pn = BID_DKP_ROLL_PRIORITY[candidate.type] or 0
